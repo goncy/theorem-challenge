@@ -46,7 +46,7 @@ const App: React.FC = () => {
       </Stack>
       <Stack as="footer" backgroundColor="black" color="white" paddingX={6} paddingY={3}>
         <Container maxWidth="5xl">
-          <Stack alignItems="center" direction="row" spacing={6}>
+          <Stack alignItems="center" direction="row" justifyContent="space-between" spacing={6}>
             <Text fontSize="xl" fontWeight="bold">
               Theorem
             </Text>
