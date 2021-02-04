@@ -6,3 +6,4 @@
 - [ ] Connect to the real endpoints
 - [ ] Add authentication screen
 - [ ] Improve wizard question components
+- [ ] Completed wizard screen
