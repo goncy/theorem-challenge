@@ -5,12 +5,15 @@ import {BrowserRouter} from "react-router-dom";
 
 import theme from "./theme";
 import App from "./app/components/App";
+import {Provider as SessionProvider} from "./session/context";
 
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
       <BrowserRouter>
-        <App />
+        <SessionProvider>
+          <App />
+        </SessionProvider>
       </BrowserRouter>
     </ChakraProvider>
   </React.StrictMode>,

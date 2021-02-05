@@ -38,7 +38,7 @@ const FeedbackProvider: React.FC = ({children}) => {
   const [feedback, setFeedback] = React.useState<Feedback[]>([]);
   const [status, setStatus] = React.useState<Status>(Status.Pending);
 
-  function answer(
+  function handleAnswer(
     userId: User["id"],
     questionId: Question["id"],
     questionAnswer: Question["answer"],
@@ -93,6 +93,18 @@ const FeedbackProvider: React.FC = ({children}) => {
     );
   }
 
+  function handleRetry() {
+    setStatus(Status.Pending);
+
+    return api
+      .list()
+      .then((feedback) => {
+        setFeedback(feedback);
+        setStatus(Status.Resolved);
+      })
+      .catch(() => setStatus(Status.Rejected));
+  }
+
   React.useEffect(() => {
     api
       .list()
@@ -104,13 +116,13 @@ const FeedbackProvider: React.FC = ({children}) => {
   }, []);
 
   if (status === Status.Pending) return <LoadingScreen />;
-  if (status === Status.Rejected) return <ErrorScreen />;
+  if (status === Status.Rejected) return <ErrorScreen onRetry={handleRetry} />;
 
   const state = {
     feedback,
   };
   const actions = {
-    answer,
+    answer: handleAnswer,
   };
 
   return <FeedbackContext.Provider value={{state, actions}}>{children}</FeedbackContext.Provider>;

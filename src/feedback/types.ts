@@ -33,7 +33,7 @@ interface MultipleChoiceOption {
 export interface MultipleChoiceQuestion extends BaseQuestion {
   type: QuestionType.MultipleChoice;
   options: MultipleChoiceOption[];
-  answer: null | 1 | 2 | 3;
+  answer: null | MultipleChoiceOption["value"];
 }
 
 // Exports

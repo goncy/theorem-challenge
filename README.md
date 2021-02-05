@@ -1,9 +1,8 @@
 # Theorem challenge
+Made with ChakraUI and Vite
 
-- [ ] My feedback screen
-- [ ] Divide components
-- [ ] Reduce repeated logic
-- [ ] Connect to the real endpoints
-- [ ] Add authentication screen
-- [ ] Improve wizard question components
-- [ ] Completed wizard screen
+### Nice to haves if having more time
+* Keyboard navigation
+* Range hover colors
+* Active state on navbar
+* Better design for logout section

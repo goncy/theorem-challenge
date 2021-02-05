@@ -1,6 +1,6 @@
 import React from "react";
-import {Container, Stack, Text} from "@chakra-ui/react";
-import {NavLink, Redirect, Route, Switch} from "react-router-dom";
+import {Avatar, Link as BaseLink, Container, Stack, Text} from "@chakra-ui/react";
+import {Link, NavLink, Redirect, Route, Switch} from "react-router-dom";
 
 import {Provider as FeedbackProvider} from "../../feedback/context";
 import ShareScreen from "../../feedback/screens/Share";
@@ -8,16 +8,21 @@ import HistoryScreen from "../../feedback/screens/History";
 import WizardScreen from "../../feedback/screens/Wizard";
 import NotFoundScreen from "../screens/NotFound";
 import CompletedScreen from "../../feedback/screens/Completed";
+import {useSession} from "../../session/hooks";
 
 const App: React.FC = () => {
+  const [user, logout] = useSession();
+
   return (
-    <Stack height="100%">
+    <Stack height="100%" spacing={0}>
       <Stack as="header" backgroundColor="gray.100" boxShadow="sm" paddingX={6}>
         <Container maxWidth="5xl">
           <Stack alignItems="center" direction="row" spacing={24}>
-            <Text fontSize="xl" fontWeight="bold">
-              Honesto
-            </Text>
+            <Link to="/">
+              <Text fontSize="xl" fontWeight="bold">
+                Honesto
+              </Text>
+            </Link>
             <Stack direction="row" flex={1} fontWeight="500" spacing={12}>
               <NavLink to="/">
                 <Text paddingY={6}>Share feedback</Text>
@@ -26,7 +31,23 @@ const App: React.FC = () => {
                 <Text paddingY={6}>My feedback</Text>
               </NavLink>
             </Stack>
-            <Text fontWeight="500">Logout</Text>
+            <Stack alignItems="center" direction="row">
+              <Avatar src={user.avatar} />
+              <Stack spacing={0}>
+                <Text>
+                  {user.firstName} {user.lastName}
+                </Text>
+                <BaseLink
+                  color="gray.500"
+                  fontSize="xs"
+                  fontWeight="bold"
+                  textTransform="uppercase"
+                  onClick={logout}
+                >
+                  Logout
+                </BaseLink>
+              </Stack>
+            </Stack>
           </Stack>
         </Container>
       </Stack>
@@ -44,13 +65,13 @@ const App: React.FC = () => {
           </FeedbackProvider>
         </Container>
       </Stack>
-      <Stack as="footer" backgroundColor="black" color="white" paddingX={6} paddingY={3}>
+      <Stack as="footer" backgroundColor="gray.800" color="white" paddingX={6} paddingY={3}>
         <Container maxWidth="5xl">
           <Stack alignItems="center" direction="row" justifyContent="space-between" spacing={6}>
-            <Text fontSize="xl" fontWeight="bold">
+            <Text fontFamily="serif" fontSize="2xl" fontWeight="500">
               Theorem
             </Text>
-            <Text fontWeight="500">
+            <Text fontSize="xs" fontWeight="500">
               Copyright 2020 <b>Theorem</b>, LLC. All Rights Reserved.
             </Text>
           </Stack>

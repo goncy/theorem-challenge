@@ -1,8 +1,8 @@
 import React from "react";
-import {Button, Heading, Stack, Text, Image, Progress} from "@chakra-ui/react";
+import {Button, Heading, Stack, Text, Progress, Avatar} from "@chakra-ui/react";
 import {Link, Redirect, useHistory, useParams} from "react-router-dom";
 
-import {useUser} from "../hooks";
+import {useFeedback} from "../hooks";
 import Question from "../components/Question";
 import {Question as IQuestion} from "../types";
 
@@ -14,13 +14,23 @@ interface Params {
 const WizardScreen: React.FC = () => {
   const {user, question: questionIndex} = useParams<Params>();
   const history = useHistory();
-  const match = useUser(user);
+  const match = useFeedback(user);
 
   const question = match?.questions[Number(questionIndex)];
 
   function handleSubmit(answer: IQuestion["answer"]) {
     question?.submit(answer);
 
+    onNext();
+  }
+
+  function onPrevious() {
+    if (Number(questionIndex) > 0) {
+      return history.push(`/${match?.user.id}/${Number(questionIndex) - 1}`);
+    }
+  }
+
+  function onNext() {
     if (Number(questionIndex) + 1 === match?.questions.length) {
       return history.push(`/${match.user.id}/completed`);
     }
@@ -46,7 +56,13 @@ const WizardScreen: React.FC = () => {
             Share your feedback for {match.user.firstName} {match.user.lastName}
           </Text>
         </Stack>
-        <Image height={16} rounded={9999} src={match.user.avatar} width={16} />
+        <Avatar
+          flexShrink={0}
+          height={16}
+          name={match.user.firstName}
+          src={match.user.avatar}
+          width={16}
+        />
       </Stack>
       <Stack>
         <Question data={question}>
@@ -54,16 +70,17 @@ const WizardScreen: React.FC = () => {
             <Stack spacing={6}>
               <Stack direction="row" justifyContent="space-between" marginTop={6}>
                 {Number(questionIndex) > 0 && (
-                  <Button size="lg" variant="outline">
+                  <Button size="lg" variant="outline" onClick={onPrevious}>
                     Previous
                   </Button>
                 )}
                 {!question.required && (
-                  <Button size="lg" variant="outline">
+                  <Button size="lg" type="submit" variant="outline" onClick={onNext}>
                     Skip
                   </Button>
                 )}
                 <Button
+                  autoFocus
                   colorScheme="primary"
                   isDisabled={Boolean(!answer)}
                   marginLeft="auto"
@@ -75,8 +92,9 @@ const WizardScreen: React.FC = () => {
               </Stack>
               <Stack spacing={3}>
                 <Progress
+                  isAnimated
                   borderRadius="sm"
-                  colorScheme="primary"
+                  colorScheme="whatsapp"
                   size="sm"
                   value={(Number(questionIndex) * 100) / match.questions.length}
                 />

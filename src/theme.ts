@@ -14,6 +14,7 @@ export default extendTheme({
     primary: {
       ...theme.colors.purple,
       500: "#AB61E5",
+      600: "#7F1ED7",
     },
   },
 });

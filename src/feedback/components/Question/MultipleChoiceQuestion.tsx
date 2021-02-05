@@ -9,7 +9,7 @@ interface Props {
 }
 
 const MultipleChoiceQuestion: React.FC<Props> = ({data, children}) => {
-  const [answer, setAnswer] = React.useState<IMultipleChoiceQuestion["answer"]>(null);
+  const [answer, setAnswer] = React.useState<IMultipleChoiceQuestion["answer"]>(data.answer);
 
   return (
     <Stack>
@@ -20,12 +20,16 @@ const MultipleChoiceQuestion: React.FC<Props> = ({data, children}) => {
           return (
             <Text
               key={option.value}
-              backgroundColor={isSelected ? "gray.600" : "gray.100"}
+              autoFocus
+              backgroundColor={isSelected ? "primary.500" : "gray.100"}
               borderRadius="md"
               color={isSelected ? "white" : "gray.700"}
               cursor={isSelected ? "inherit" : "pointer"}
               padding={6}
+              tabIndex={0}
+              transition="all .25s"
               onClick={() => setAnswer(option.value)}
+              onKeyDown={(e) => e.keyCode === 32 && setAnswer(option.value)}
             >
               {option.label}
             </Text>

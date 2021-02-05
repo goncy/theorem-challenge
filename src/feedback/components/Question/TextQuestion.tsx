@@ -8,12 +8,13 @@ interface Props {
   children: (answer: ITextQuestion["answer"]) => React.ReactElement;
 }
 
-const TextQuestion: React.FC<Props> = ({children}) => {
-  const [answer, setAnswer] = React.useState<ITextQuestion["answer"]>(null);
+const TextQuestion: React.FC<Props> = ({data, children}) => {
+  const [answer, setAnswer] = React.useState<ITextQuestion["answer"]>(data.answer);
 
   return (
     <Stack>
       <Textarea
+        autoFocus
         placeholder="Say something"
         rows={10}
         onChange={(event) => setAnswer(event.target.value)}
