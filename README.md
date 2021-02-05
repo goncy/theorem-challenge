@@ -6,3 +6,5 @@ Made with ChakraUI and Vite
 * Range hover colors
 * Active state on navbar
 * Better design for logout section
+
+[DEMO](https://goncy-theorem-challenge.netlify.app/)
