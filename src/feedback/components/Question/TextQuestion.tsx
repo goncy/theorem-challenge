@@ -17,6 +17,7 @@ const TextQuestion: React.FC<Props> = ({data, children}) => {
         autoFocus
         placeholder="Say something"
         rows={10}
+        value={answer || ""}
         onChange={(event) => setAnswer(event.target.value)}
       />
       {children(answer)}
